@@ -28,7 +28,7 @@ const limiter = rateLimit({
 app.use(limiter);
 
 // Routes
-app.use("/", (req, res, next) =>
+app.get("/", (req, res, next) =>
   res.status(200).json({ message: "server ok" })
 );
 app.use("/uploads", express.static("uploads"));
