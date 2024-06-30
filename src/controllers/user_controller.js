@@ -22,21 +22,57 @@ exports.getUsers = async (req, res) => {
   }
 };
 
+
+
+exports.getSingleUser = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = await User.findOne({ _id: id });
+    if (user) {
+      resformat(res, 200, "OK", user, null, {});
+    } else {
+      resformat(res, 404, "User not found with this id");
+    }
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
 exports.updateUser = async (req, res) => {
   try {
-    const { role } = req.body;
+    const {
+      image,
+      first_name,
+      last_name,
+      email,
+      contact,
+      gender,
+      address,
+      role,
+    } = req.body;
+
     const user = await User.findById(req.params.id);
-    console.log(req.body);
+
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    user.role = role;
+
+    if (role) user.role = role;
+    if (image) user.image = image;
+    if (first_name) user.first_name = first_name;
+    if (last_name) user.last_name = last_name;
+    if (email) user.email = email;
+    if (contact) user.contact = contact;
+    if (gender) user.gender = gender;
+    if (address) user.address = address;
+
     await user.save();
-    resformat(res, 200, "user role updated", user, null, null);
+    resformat(res, 200, "User updated", user, null, null);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 exports.deleteUser = async (req, res) => {
   try {

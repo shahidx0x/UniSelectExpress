@@ -2,7 +2,7 @@
   "name": "farnimerse-express",
   "version": "1.0.0",
   "description": "express-bancend-for-farnimarse",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
     "start": "node server.js",
